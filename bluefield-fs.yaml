@@ -26,20 +26,20 @@
         mode: '0440'
     when: bftar_st.stat.path is not defined
   - stat:
-      path: "{{ bfdir }}/MLNX_OFED_LINUX-5.0-2.1.8.0-debian8.11-x86_64.tgz"
+      path: "{{ bfdir }}/MLNX_OFED_LINUX-5.0-2.1.8.0-rhel7.8-x86_64.tgz"
     register: mlnx_st
   - name: download ofed and drivers
     get_url:
-        url: "http://{{ file_server }}/MLNX_OFED_LINUX-5.0-2.1.8.0-debian8.11-x86_64.tgz"
+        url: "http://{{ file_server }}/MLNX_OFED_LINUX-5.0-2.1.8.0-rhel7.8-x86_64.tgz"
         dest: "{{ bfdir }}"
         mode: '0440'
     when: mlnx_st.stat.path is not defined
   - stat:
-      path: "{{ bfdir }}/mft-4.14.0-105-x86_64-deb.tgz"
+      path: "{{ bfdir }}/mft-4.14.4-6-x86_64-rpm.tgz"
     register: mft_st
   - name: download ofed and drivers
     get_url:
-        url: "http://{{ file_server }}/mft-4.14.0-105-x86_64-deb.tgz"
+        url: "http://{{ file_server }}/mft-4.14.4-6-x86_64-rpm.tgz"
         dest: "{{ bfdir }}"
         mode: '0440'
     when: mft_st.stat.path is not defined
@@ -67,7 +67,7 @@
     ignore_errors: True
     register: rshim_rc
   - name: check if kernel-devel installed
-    apt:
+    yum:
         name: linux-headers
         state: present
     when: rshim_rc.rc == 1
@@ -106,16 +106,16 @@
   - name: install mlnx
     block:
       - stat:
-          path: "{{ bfdir }}/MLNX_OFED_LINUX-5.0-2.1.8.0-debian8.11-x86_64"
+          path: "{{ bfdir }}/MLNX_OFED_LINUX-5.0-2.1.8.0-rhel7.8-x86_64"
         register: mlnx_st
       - name: unarchiving OFED install tar package
         unarchive:
-            src: "{{ bfdir }}/MLNX_OFED_LINUX-5.0-2.1.8.0-debian8.11-x86_64.tgz"
+            src: "{{ bfdir }}/MLNX_OFED_LINUX-5.0-2.1.8.0-rhel7.8-x86_64.tgz"
             dest: "{{ bfdir }}"
             remote_src: yes
         when: mlnx_st.stat.path is not defined
       - name: install python-pip
-        apt:
+        yum:
           name: python-pip
       - name: install pexpect
         pip:
@@ -123,7 +123,7 @@
       - name: installing OFED
         expect:
           command: ./mlnxofedinstall --dpdk --upstream-libs --skip-distro-check
-          chdir: "{{ bfdir}}/MLNX_OFED_LINUX-5.0-2.1.8.0-debian8.11-x86_64/"
+          chdir: "{{ bfdir}}/MLNX_OFED_LINUX-5.0-2.1.8.0-rhel7.8-x86_64/"
           echo: yes
           timeout: null
           responses:
