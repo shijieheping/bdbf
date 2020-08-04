@@ -3,7 +3,7 @@
   vars:
       bfdir: /root/bluefield
       bfdir_inst: "{{ bfdir }}/BlueField-2.5.1.11213"
-      file_server:
+      file_server: 10.75.70.224:8081
   tasks:
   - name: test if bluefield exist   
     shell: lspci | grep "BlueField integrated ConnectX-5" || false 
