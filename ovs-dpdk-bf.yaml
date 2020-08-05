@@ -74,18 +74,18 @@
     tags: make
   - name: mft stat
     stat:
-      path: "{{ bfdir }}/mft-4.14.0-105-x86_64-deb"
+      path: "{{ bfdir }}/mft-4.14.4-6-x86_64-rpm"
     register: mft_st
   - name: mft unarchive
     unarchive:
-      src: "{{ bfdir }}/mft-4.14.0-105-x86_64-deb.tgz"
+      src: "{{ bfdir }}/mft-4.14.4-6-x86_64-rpm.tgz"
       dest: "{{ bfdir }}"
       remote_src: yes
     when: mft_st.stat.path is not defined
   - name: install mft
     shell: ./install.sh
     args:
-      chdir: "{{ bfdir }}/mft-4.14.0-105-x86_64-deb"
+      chdir: "{{ bfdir }}/mft-4.14.4-6-x86_64-rpm"
   - name: check nic mode
     shell: mst start; mlxconfig -d /dev/mst/mt41682_pciconf0 q | grep -i model
     register: nic_rt
