@@ -72,7 +72,7 @@
         state: present
     when: rshim_rc.rc == 1
   - name: install rshim
-    shell: dkms add rshim.conf; dkms install -m rshim -v 0.2; modprobe rshim_net; modprobe rshim_pcie
+    shell: dkms add rshim/0.2; dkms install -m rshim -v 0.2; modprobe rshim_net; modprobe rshim_pcie
     args:
         chdir: "{{ bfdir_inst }}/src/drivers/rshim"
     when: rshim_rc.rc == 1
