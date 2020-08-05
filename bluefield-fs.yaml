@@ -68,7 +68,7 @@
     register: rshim_rc
   - name: check if kernel-devel installed
     yum:
-        name: linux-headers
+        name: kenerl-devel
         state: present
     when: rshim_rc.rc == 1
   - name: install rshim
