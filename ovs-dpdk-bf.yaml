@@ -64,7 +64,7 @@
   - name: remove existing dpdk
     shell: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@192.168.100.2 "rm -rf /usr/include/rte_*; rm -rf /usr/lib64/libdpdk*; rm -rf /usr/lib64/librte_*"
   - name: make dpdk
-    shell: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@192.168.100.2 "cd /home/dpdk; make T=arm64-armv8a-linux-gcc config; cd build; make -j 8"
+    shell: ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@192.168.100.2 "cd /home/dpdk; make config T=arm64-bluefield-linux-gcc; cd build; make -j 8 CONFIG_RTE_KNI_KMOD=n CONFIG_RTE_EAL_IGB_UIO=n"
     tags: make
   - name: make ovs
     block:
